@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exclusive vs Non-Exclusive Commercial Value Survey</title>
+  <title>Exclusive vs Non-Exclusive Commercial Value Survey | 獨家 vs 非獨家商業價值調查</title>
   <style>
     :root {
       --bg: #f3f6f8;
@@ -18,9 +18,7 @@
       --value-bg: #dff0e2;
       --value-border: #b6d7bc;
       --value-text: #14532d;
-      --accent: #0f766e;
       --danger: #dc2626;
-      --warning: #d97706;
       --radius: 12px;
       --shadow: 0 4px 20px rgba(15, 35, 52, 0.06);
     }
@@ -29,7 +27,7 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -37,7 +35,7 @@
     }
 
     .container {
-      max-width: 1120px;
+      max-width: 1140px;
       margin: 0 auto;
     }
 
@@ -60,7 +58,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .badge {
@@ -73,7 +71,6 @@
       font-size: 12px;
       padding: 4px 10px;
       border-radius: 999px;
-      letter-spacing: 0.2px;
     }
 
     .deadline-badge {
@@ -82,10 +79,17 @@
     }
 
     h1 {
-      margin: 6px 0 8px;
-      font-size: clamp(20px, 2.6vw, 26px);
+      margin: 6px 0 4px;
+      font-size: clamp(20px, 2.5vw, 25px);
       font-weight: 700;
       color: var(--text);
+    }
+
+    .subtitle-zh {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
     }
 
     .context-box {
@@ -112,22 +116,26 @@
       flex-wrap: wrap;
     }
 
-    .buyer-grid {
+    .buyer-row {
+      max-width: 380px;
+    }
+
+    .extra-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 14px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     .field label {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--text);
     }
 
     .req {
@@ -157,7 +165,7 @@
       box-shadow: 0 0 0 3px rgba(0, 139, 148, 0.14);
     }
 
-    input.invalid {
+    select.invalid, input.invalid {
       border-color: var(--danger);
       box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
     }
@@ -177,7 +185,7 @@
     table.survey-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 820px;
+      min-width: 860px;
       font-size: 13.5px;
     }
 
@@ -191,10 +199,22 @@
       font-size: 13px;
     }
 
+    .th-zh {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
     .survey-table th.col-value {
       background: var(--value-bg);
       color: var(--value-text);
       border-bottom-color: var(--value-border);
+    }
+
+    .survey-table th.col-value .th-zh {
+      color: #166534;
     }
 
     .survey-table td {
@@ -208,19 +228,27 @@
     }
 
     .survey-table td.col-measure {
-      width: 18%;
-      font-weight: 600;
+      width: 20%;
+      font-weight: 700;
       background: #fafcfd;
     }
 
     .survey-table td.col-excl,
     .survey-table td.col-nonexcl {
-      width: 28%;
+      width: 27%;
     }
 
     .survey-table td.col-value {
       width: 26%;
       background: rgba(223, 240, 226, 0.45);
+    }
+
+    .measure-zh {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-top: 2px;
     }
 
     .measure-hint {
@@ -243,10 +271,9 @@
     }
 
     .inline-input-row .unit {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-muted);
       white-space: nowrap;
-      min-width: 48px;
     }
 
     .inline-label {
@@ -254,7 +281,6 @@
       font-weight: 600;
       color: var(--text-muted);
       white-space: nowrap;
-      min-width: 62px;
     }
 
     .sub-block {
@@ -271,7 +297,7 @@
 
     .check-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 7px;
       font-size: 13px;
       cursor: pointer;
@@ -280,6 +306,7 @@
     .check-item input[type="checkbox"] {
       width: 16px;
       height: 16px;
+      margin-top: 2px;
       accent-color: var(--primary);
       cursor: pointer;
       flex-shrink: 0;
@@ -320,7 +347,7 @@
       gap: 6px;
       padding: 9px 16px;
       border-radius: 8px;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       font-family: inherit;
       border: 1px solid var(--border);
@@ -429,7 +456,7 @@
       font-size: 12px;
       background: var(--primary-soft);
       color: var(--primary-dark);
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 6px;
     }
 
@@ -507,47 +534,39 @@
     <!-- Header -->
     <div class="card header-card">
       <div class="header-top">
-        <span class="badge">Watsons Regional EB Partners Renewal</span>
-        <span class="badge deadline-badge">Target Revert: By 30 Nov</span>
+        <span class="badge">Watsons Regional EB Partners Renewal | 屈臣氏區域獨家品牌續約評估</span>
+        <span class="badge deadline-badge">Target Revert: By 30 Nov | 回覆期限：11月30日前</span>
       </div>
       <h1>Exclusive vs Non-Exclusive Commercial Value Survey</h1>
+      <div class="subtitle-zh">獨家合作 vs 非獨家合作 商業價值基準調查表</div>
       <div class="context-box">
-        <strong>Objective:</strong> Provide a top-line view of the commercial value of <strong>Exclusive vs Non-Exclusive</strong> to support renewal discussions with Key regional EB partners and demonstrate the value of staying exclusive to Watsons. Please fill in your <strong>Buyer Code</strong> and advise on the benchmarks below.
+        <strong>Objective / 調查目的：</strong> Provide a top-line view of the commercial value of <strong>Exclusive vs Non-Exclusive</strong> to support renewal discussions with Key regional EB partners and demonstrate the value of staying exclusive to Watsons.<br />
+        提供「獨家」與「非獨家」合作之商業價值概覽，以支持與區域重點獨家品牌（EB）夥伴之續約談判，展現維持屈臣氏獨家合作之優勢價值。
       </div>
     </div>
 
-    <!-- Respondent Info -->
+    <!-- Respondent Info: Buyer Code 01-12 Only -->
     <div class="card">
       <div class="section-title">
-        <span>1. Respondent Identification</span>
-        <span style="font-size:12px; color:var(--text-muted); font-weight:400;">~20 Buyers Survey</span>
+        <span>1. Respondent Identification / 填寫者識別</span>
       </div>
-      <div class="buyer-grid">
+      <div class="buyer-row">
         <div class="field">
-          <label for="buyerCode">Buyer Code <span class="req">*</span></label>
-          <input type="text" id="buyerCode" placeholder="e.g. B01, BUYER-TW-01" autocomplete="off" />
-        </div>
-        <div class="field">
-          <label for="buyerName">Buyer Name / Initials (Optional)</label>
-          <input type="text" id="buyerName" placeholder="e.g. Chris" />
-        </div>
-        <div class="field">
-          <label for="category">Category / Team (Optional)</label>
-          <input type="text" id="category" placeholder="e.g. Skincare, Health" />
-        </div>
-        <div class="field">
-          <label for="market">Market / Region (Optional)</label>
-          <select id="market">
-            <option value="">-- Select Market --</option>
-            <option value="Regional">Regional</option>
-            <option value="TW">Taiwan (TW)</option>
-            <option value="HK">Hong Kong (HK)</option>
-            <option value="SG">Singapore (SG)</option>
-            <option value="MY">Malaysia (MY)</option>
-            <option value="TH">Thailand (TH)</option>
-            <option value="ID">Indonesia (ID)</option>
-            <option value="PH">Philippines (PH)</option>
-            <option value="Other">Other</option>
+          <label for="buyerCode">Buyer Code / 買手編號 <span class="req">*</span></label>
+          <select id="buyerCode">
+            <option value="">-- Select Buyer Code (01 - 12) / 請選擇買手編號 --</option>
+            <option value="01">Buyer Code 01</option>
+            <option value="02">Buyer Code 02</option>
+            <option value="03">Buyer Code 03</option>
+            <option value="04">Buyer Code 04</option>
+            <option value="05">Buyer Code 05</option>
+            <option value="06">Buyer Code 06</option>
+            <option value="07">Buyer Code 07</option>
+            <option value="08">Buyer Code 08</option>
+            <option value="09">Buyer Code 09</option>
+            <option value="10">Buyer Code 10</option>
+            <option value="11">Buyer Code 11</option>
+            <option value="12">Buyer Code 12</option>
           </select>
         </div>
       </div>
@@ -556,18 +575,30 @@
     <!-- Key Measures Benchmark Table -->
     <div class="card">
       <div class="section-title">
-        <span>2. Key Measures &amp; Exclusivity Value Benchmarks</span>
-        <button type="button" class="btn btn-sm" id="btnResetForm">Clear Form</button>
+        <span>2. Key Measures &amp; Exclusivity Value Benchmarks / 關鍵指標與獨家價值基準</span>
+        <button type="button" class="btn btn-sm" id="btnResetForm">Clear Form / 清空表單</button>
       </div>
 
       <div class="matrix-wrap">
         <table class="survey-table">
           <thead>
             <tr>
-              <th>Key Measure</th>
-              <th>Exclusive Offer</th>
-              <th>Non-Exclusive Offer</th>
-              <th class="col-value">Exclusivity Value</th>
+              <th>
+                Key Measure
+                <span class="th-zh">關鍵指標</span>
+              </th>
+              <th>
+                Exclusive Offer
+                <span class="th-zh">獨家方案</span>
+              </th>
+              <th>
+                Non-Exclusive Offer
+                <span class="th-zh">非獨家方案</span>
+              </th>
+              <th class="col-value">
+                Exclusivity Value
+                <span class="th-zh">獨家專屬價值</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -575,38 +606,41 @@
             <tr>
               <td class="col-measure">
                 Store distribution
-                <span class="measure-hint">Store count &amp; concept unit</span>
+                <span class="measure-zh">門市鋪貨分佈</span>
+                <span class="measure-hint">Store count &amp; concept unit / 店數與概念店櫃位</span>
               </td>
               <td class="col-excl">
                 <div class="inline-input-row">
                   <input type="number" id="exclStores" min="0" placeholder="e.g. 500" />
-                  <span class="unit">stores</span>
+                  <span class="unit">stores (店)</span>
                 </div>
                 <div class="sub-block">
-                  <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">New concept store brand unit?</label>
+                  <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">
+                    New concept store brand unit?<br />是否提供新概念店品牌專櫃？
+                  </label>
                   <select id="exclConceptUnit">
-                    <option value="">-- Select --</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="Selected key stores">Selected key stores</option>
-                    <option value="TBD">TBD</option>
+                    <option value="">-- Select / 請選擇 --</option>
+                    <option value="Yes">Yes (是)</option>
+                    <option value="No">No (否)</option>
+                    <option value="Selected key stores">Selected key stores (指定重點門市)</option>
+                    <option value="TBD">TBD (待定)</option>
                   </select>
                 </div>
               </td>
               <td class="col-nonexcl">
                 <div class="inline-input-row">
                   <input type="number" id="nonExclStores" min="0" placeholder="e.g. 250" />
-                  <span class="unit">stores</span>
+                  <span class="unit">stores (店)</span>
                 </div>
               </td>
               <td class="col-value">
-                <span class="auto-pill">Auto-calculated / Editable</span>
+                <span class="auto-pill">Auto / Editable 自動計算或手動填寫</span>
                 <div class="inline-input-row">
-                  <span class="inline-label">+ stores</span>
+                  <span class="inline-label">+ stores 增加</span>
                   <input type="text" id="valStoresDiff" placeholder="+ ___ stores" />
                 </div>
                 <div class="inline-input-row">
-                  <span class="inline-label">+ %</span>
+                  <span class="inline-label">+ % 增幅</span>
                   <input type="text" id="valStoresPct" placeholder="+ ___%" />
                 </div>
               </td>
@@ -616,19 +650,20 @@
             <tr>
               <td class="col-measure">
                 Space allocation
-                <span class="measure-hint">Shelf / gondola priority</span>
+                <span class="measure-zh">陳列空間配置</span>
+                <span class="measure-hint">Shelf &amp; gondola priority / 貨架與陳列優先權</span>
               </td>
               <td class="col-excl">
-                <input type="text" id="exclSpace" value="Prioritized space" />
+                <input type="text" id="exclSpace" value="Prioritized space (優先配置空間)" />
               </td>
               <td class="col-nonexcl">
-                <input type="text" id="nonExclSpace" value="Non-prioritized space" />
+                <input type="text" id="nonExclSpace" value="Non-prioritized space (非優先配置空間)" />
               </td>
               <td class="col-value">
                 <div class="inline-input-row">
                   <span class="inline-label">+</span>
                   <input type="number" id="valSpaceMetres" step="0.1" min="0" placeholder="e.g. 1.5" />
-                  <span class="unit">metres</span>
+                  <span class="unit">metres (米)</span>
                 </div>
               </td>
             </tr>
@@ -637,7 +672,8 @@
             <tr>
               <td class="col-measure">
                 Annual growth target
-                <span class="measure-hint">YoY target comparison</span>
+                <span class="measure-zh">年度成長目標</span>
+                <span class="measure-hint">YoY target comparison / 年度成長率比較</span>
               </td>
               <td class="col-excl">
                 <div class="inline-input-row">
@@ -652,11 +688,11 @@
                 </div>
               </td>
               <td class="col-value">
-                <span class="auto-pill">Auto-calculated / Editable</span>
+                <span class="auto-pill">Auto / Editable 自動計算或手動填寫</span>
                 <div class="inline-input-row">
                   <span class="inline-label">+</span>
                   <input type="text" id="valGrowthPt" placeholder="+ ___ pt" />
-                  <span class="unit">pt</span>
+                  <span class="unit">pt (百分點)</span>
                 </div>
               </td>
             </tr>
@@ -665,18 +701,19 @@
             <tr>
               <td class="col-measure">
                 Listing fee
-                <span class="measure-hint">Fee structure / waiver</span>
+                <span class="measure-zh">上架費</span>
+                <span class="measure-hint">Fee structure / waiver / 費用架構或減免</span>
               </td>
               <td class="col-excl">
-                <input type="text" id="exclListingFee" placeholder="e.g. Waived / HKD 0" />
+                <input type="text" id="exclListingFee" placeholder="e.g. Waived / 減免 / 0" />
               </td>
               <td class="col-nonexcl">
-                <input type="text" id="nonExclListingFee" placeholder="e.g. Standard listing fee" />
+                <input type="text" id="nonExclListingFee" placeholder="e.g. Standard fee / 標準上架費" />
               </td>
               <td class="col-value">
                 <div class="inline-input-row">
-                  <span class="inline-label">Saving of</span>
-                  <input type="text" id="valListingSaving" placeholder="e.g. 100% / HKD 50,000" />
+                  <span class="inline-label">Saving of (節省)</span>
+                  <input type="text" id="valListingSaving" placeholder="e.g. 100% / TWD 50,000" />
                 </div>
               </td>
             </tr>
@@ -685,39 +722,40 @@
             <tr>
               <td class="col-measure">
                 Marketing Support
-                <span class="measure-hint">Priority allocation &amp; preferential package</span>
+                <span class="measure-zh">行銷資源支援</span>
+                <span class="measure-hint">Priority allocation &amp; preferential package / 優先配置與優惠方案</span>
               </td>
               <td class="col-excl">
                 <div class="check-list">
                   <label class="check-item">
                     <input type="checkbox" id="mktKeyStore" checked />
-                    <span>Key store activation</span>
+                    <span>Key store activation<br /><small style="color:var(--text-muted);">重點門市活動 (frequency? 頻率？)</small></span>
                   </label>
-                  <input type="text" id="mktKeyStoreFreq" placeholder="Frequency? e.g. 4 times/year" style="margin-left:23px; width:calc(100% - 23px);" />
+                  <input type="text" id="mktKeyStoreFreq" placeholder="Frequency e.g. 4 times/year (每年4次)" style="margin-left:23px; width:calc(100% - 23px);" />
 
                   <label class="check-item">
                     <input type="checkbox" id="mktEventBooth" checked />
-                    <span>Category event booth</span>
+                    <span>Category event booth<br /><small style="color:var(--text-muted);">品類活動展位</small></span>
                   </label>
                   <label class="check-item">
                     <input type="checkbox" id="mktCampaignFeature" checked />
-                    <span>Category campaign feature</span>
+                    <span>Category campaign feature<br /><small style="color:var(--text-muted);">品類檔期主推</small></span>
                   </label>
                   <label class="check-item">
                     <input type="checkbox" id="mktRedemptionSpot" checked />
-                    <span>Redemption spot</span>
+                    <span>Redemption spot<br /><small style="color:var(--text-muted);">兌換專區 / 換購點</small></span>
                   </label>
                 </div>
                 <div class="sub-block">
-                  <input type="text" id="mktOtherExcl" placeholder="Other marketing package details (optional)" />
+                  <input type="text" id="mktOtherExcl" placeholder="Other marketing details / 其他行銷補充 (選填)" />
                 </div>
               </td>
               <td class="col-nonexcl">
-                <input type="text" id="nonExclMkt" value="Standard offer" />
+                <input type="text" id="nonExclMkt" value="Standard offer (標準方案)" />
               </td>
               <td class="col-value">
                 <div class="inline-input-row">
-                  <span class="inline-label">Saving of</span>
+                  <span class="inline-label">Saving of (節省)</span>
                   <input type="text" id="valMktSavingPct" placeholder="e.g. 25" />
                   <span class="unit">%</span>
                 </div>
@@ -728,38 +766,39 @@
             <tr>
               <td class="col-measure">
                 Business reviews
-                <span class="measure-hint">Local &amp; Regional cadence</span>
+                <span class="measure-zh">商業檢討會議</span>
+                <span class="measure-hint">Local &amp; Regional cadence / 本地與區域會議頻率</span>
               </td>
               <td class="col-excl">
                 <div class="inline-input-row">
-                  <span class="inline-label">Local:</span>
+                  <span class="inline-label">Local 本地:</span>
                   <input type="number" id="exclReviewLocal" min="0" placeholder="e.g. 4" />
-                  <span class="unit">times/yr</span>
+                  <span class="unit">times/yr (次/年)</span>
                 </div>
                 <div class="inline-input-row">
-                  <span class="inline-label">Regional:</span>
+                  <span class="inline-label">Regional 區域:</span>
                   <input type="number" id="exclReviewRegional" min="0" value="2" />
-                  <span class="unit">times/yr</span>
+                  <span class="unit">times/yr (次/年)</span>
                 </div>
               </td>
               <td class="col-nonexcl">
                 <div class="inline-input-row">
-                  <span class="inline-label">Local:</span>
+                  <span class="inline-label">Local 本地:</span>
                   <input type="number" id="nonExclReviewLocal" min="0" placeholder="e.g. 2" />
-                  <span class="unit">times/yr</span>
+                  <span class="unit">times/yr (次/年)</span>
                 </div>
                 <div class="inline-input-row">
-                  <span class="inline-label">Regional:</span>
+                  <span class="inline-label">Regional 區域:</span>
                   <input type="number" id="nonExclReviewRegional" min="0" value="0" />
-                  <span class="unit">times/yr (0 = none)</span>
+                  <span class="unit">times/yr (0 = none 無)</span>
                 </div>
               </td>
               <td class="col-value">
-                <span class="auto-pill">Auto-calculated / Editable</span>
+                <span class="auto-pill">Auto / Editable 自動計算或手動填寫</span>
                 <div class="inline-input-row">
                   <span class="inline-label">+</span>
                   <input type="text" id="valReviewsDiff" placeholder="+ ___ reviews" />
-                  <span class="unit">reviews</span>
+                  <span class="unit">reviews (場)</span>
                 </div>
               </td>
             </tr>
@@ -769,14 +808,14 @@
 
       <!-- Additional Suggested Key Measures -->
       <div style="margin-top:16px;">
-        <div class="buyer-grid">
+        <div class="extra-grid">
           <div class="field">
-            <label for="otherMeasures">Other Suggested Key Measures to Highlight Exclusivity Value</label>
-            <textarea id="otherMeasures" placeholder="e.g. Exclusive SKU launch window, CRM / member data sharing, O+O e-commerce banner support..."></textarea>
+            <label for="otherMeasures">Other Suggested Key Measures / 其他建議關鍵指標 (選填)</label>
+            <textarea id="otherMeasures" placeholder="e.g. Exclusive SKU launch window, CRM data sharing / 例如：獨家新品首發期、會員數據共享..."></textarea>
           </div>
           <div class="field">
-            <label for="comments">General Comments / Notes</label>
-            <textarea id="comments" placeholder="Any remarks for the renewal discussion with regional EB partners..."></textarea>
+            <label for="comments">General Comments / 其他備註說明 (選填)</label>
+            <textarea id="comments" placeholder="Any remarks for the renewal discussion / 續約談判補充說明..."></textarea>
           </div>
         </div>
       </div>
@@ -784,12 +823,12 @@
       <!-- Submit & Export Actions -->
       <div class="actions-bar">
         <div class="btn-group">
-          <button type="button" class="btn btn-primary" id="btnSaveAndExportCsv">Submit &amp; Export My CSV</button>
-          <button type="button" class="btn" id="btnSaveOnly">Save to Browser List</button>
-          <button type="button" class="btn" id="btnCopyEmail">Copy Summary for Email</button>
+          <button type="button" class="btn btn-primary" id="btnSaveAndExportCsv">Submit &amp; Export CSV / 提交並匯出 CSV</button>
+          <button type="button" class="btn" id="btnSaveOnly">Save to List / 暫存至清單</button>
+          <button type="button" class="btn" id="btnCopyEmail">Copy Summary / 複製摘要文字</button>
         </div>
         <div class="btn-group">
-          <button type="button" class="btn btn-sm" id="btnOpenWebhookModal">Cloud Sync Settings</button>
+          <button type="button" class="btn btn-sm" id="btnOpenWebhookModal">Cloud Sync / 雲端同步設定</button>
         </div>
       </div>
     </div>
@@ -797,16 +836,17 @@
     <!-- Collected Responses & Consolidator -->
     <div class="card">
       <div class="section-title">
-        <span>3. Collected Responses &amp; Master Export (<span id="respCount">0</span>)</span>
+        <span>3. Collected Responses &amp; Master Export / 已收集回覆與總表匯出 (<span id="respCount">0</span>)</span>
         <div class="btn-group">
-          <button type="button" class="btn btn-success btn-sm" id="btnExportAllCsv">Export All as Master CSV</button>
-          <button type="button" class="btn btn-sm" id="btnExportAllJson">Export All JSON</button>
-          <button type="button" class="btn btn-sm btn-danger-outline" id="btnClearAll">Clear All</button>
+          <button type="button" class="btn btn-success btn-sm" id="btnExportAllCsv">Export Master CSV / 匯出全部總表</button>
+          <button type="button" class="btn btn-sm" id="btnExportAllJson">Export JSON / 匯出 JSON</button>
+          <button type="button" class="btn btn-sm btn-danger-outline" id="btnClearAll">Clear All / 清空</button>
         </div>
       </div>
 
       <div class="drop-zone" id="dropZone">
-        <strong>Organizer Merge Tool:</strong> Drag &amp; drop multiple buyers' <code>.csv</code> or <code>.json</code> response files here (or click to select files) to merge &amp; deduplicate by <strong>Buyer Code</strong>.
+        <strong>Organizer Merge Tool / 彙整工具：</strong> Drag &amp; drop multiple buyers' <code>.csv</code> or <code>.json</code> files here (or click to select) to merge by <strong>Buyer Code</strong>.<br />
+        將多位買手回傳的 <code>.csv</code> 或 <code>.json</code> 檔案拖曳至此（或點擊選取），即可依 <strong>Buyer Code</strong> 自動去重合併並匯出總表。
         <input type="file" id="fileInput" multiple accept=".csv,.json" style="display:none;" />
       </div>
 
@@ -814,22 +854,22 @@
         <table class="collected-table">
           <thead>
             <tr>
-              <th>Buyer Code</th>
-              <th>Name / Market</th>
-              <th>Stores (Excl / Non)</th>
-              <th>Space (+m)</th>
-              <th>Growth (+pt)</th>
-              <th>Listing Saving</th>
-              <th>Mkt Saving</th>
-              <th>Reviews (+/yr)</th>
-              <th>Updated</th>
-              <th>Actions</th>
+              <th>Buyer Code<br /><small>買手編號</small></th>
+              <th>Stores (Excl / Non)<br /><small>店數 (獨家/非獨家)</small></th>
+              <th>Space (+m)<br /><small>空間增量</small></th>
+              <th>Growth (+pt)<br /><small>成長差距</small></th>
+              <th>Listing Saving<br /><small>上架費節省</small></th>
+              <th>Mkt Saving<br /><small>行銷節省</small></th>
+              <th>Reviews (+/yr)<br /><small>會議增量</small></th>
+              <th>Updated<br /><small>更新時間</small></th>
+              <th>Actions<br /><small>操作</small></th>
             </tr>
           </thead>
           <tbody id="collectedBody">
             <tr>
-              <td colspan="10" style="text-align:center; color:var(--text-muted); padding:20px;">
-                No responses saved yet. Fill in a <strong>Buyer Code</strong> above and click <strong>Submit &amp; Export My CSV</strong>.
+              <td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">
+                No responses saved yet. Select a <strong>Buyer Code (01-12)</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />
+                尚無暫存回覆，請先於上方選擇 <strong>Buyer Code (01-12)</strong> 並點擊提交匯出。
               </td>
             </tr>
           </tbody>
@@ -842,23 +882,24 @@
   <div class="modal-backdrop" id="webhookModal">
     <div class="modal">
       <div class="section-title">
-        <span>Optional: Google Sheets Auto-Collection</span>
-        <button type="button" class="btn btn-sm" id="btnCloseModal">Close</button>
+        <span>Optional: Google Sheets Auto-Collection / Google 試算表自動收單設定</span>
+        <button type="button" class="btn btn-sm" id="btnCloseModal">Close / 關閉</button>
       </div>
       <p style="font-size:13px; color:var(--text-muted); margin-top:0;">
-        By default, each buyer can export their CSV/JSON or copy the email summary, and you can merge all ~20 files above. If you want responses to also auto-submit to a Google Sheet, deploy a Google Apps Script Web App and paste its URL below (or pass <code>?webhook=YOUR_URL</code> in the link you share).
+        Paste your Google Apps Script Web App URL below (or share link with <code>?webhook=YOUR_URL</code>) so submissions automatically append to Google Sheets.<br />
+        於下方貼上 Google Apps Script Web App 網址，買手提交時即自動同步寫入 Google 試算表。
       </p>
       <div class="field" style="margin-bottom:12px;">
         <label for="webhookUrlInput">Webhook / Google Apps Script URL</label>
         <input type="url" id="webhookUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
       </div>
       <div class="btn-group" style="margin-bottom:14px;">
-        <button type="button" class="btn btn-primary btn-sm" id="btnSaveWebhook">Save Webhook URL</button>
-        <button type="button" class="btn btn-sm" id="btnCopyShareLink">Copy Shareable Link with Webhook</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btnSaveWebhook">Save URL / 儲存網址</button>
+        <button type="button" class="btn btn-sm" id="btnCopyShareLink">Copy Shareable Link / 複製分享連結</button>
       </div>
       <details>
-        <summary style="font-size:13px; font-weight:600; cursor:pointer; color:var(--primary-dark);">View Google Apps Script Template</summary>
-        <div class="code-block" id="appsScriptCode">function doPost(e) {
+        <summary style="font-size:13px; font-weight:600; cursor:pointer; color:var(--primary-dark);">View Google Apps Script Template / 檢視 Apps Script 範例程式碼</summary>
+        <div class="code-block">function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = JSON.parse(e.postData.contents);
   if (sheet.getLastRow() === 0) {
@@ -876,14 +917,11 @@
 
   <script>
     (function () {
-      const STORAGE_KEY = "watsons_exclusivity_survey_responses_v1";
+      const STORAGE_KEY = "watsons_exclusivity_survey_responses_v2";
       const WEBHOOK_KEY = "watsons_exclusivity_survey_webhook_v1";
 
       const CSV_COLUMNS = [
         "buyer_code",
-        "buyer_name",
-        "category",
-        "market",
         "excl_stores",
         "excl_concept_unit",
         "non_excl_stores",
@@ -926,13 +964,16 @@
         showToast._t = setTimeout(() => el.classList.remove("show"), 2800);
       }
 
-      // Check URL ?webhook=... param
+      // Check URL ?webhook=... and ?buyer=... params
       const params = new URLSearchParams(window.location.search);
       if (params.get("webhook")) {
         localStorage.setItem(WEBHOOK_KEY, params.get("webhook").trim());
       }
       if (params.get("buyer")) {
-        $("buyerCode").value = params.get("buyer").trim();
+        const b = params.get("buyer").trim().padStart(2, "0");
+        if (["01","02","03","04","05","06","07","08","09","10","11","12"].includes(b)) {
+          $("buyerCode").value = b;
+        }
       }
 
       // Auto-calculation handlers
@@ -988,9 +1029,6 @@
       function readForm() {
         return {
           buyer_code: $("buyerCode").value.trim(),
-          buyer_name: $("buyerName").value.trim(),
-          category: $("category").value.trim(),
-          market: $("market").value,
           excl_stores: $("exclStores").value.trim(),
           excl_concept_unit: $("exclConceptUnit").value,
           non_excl_stores: $("nonExclStores").value.trim(),
@@ -1026,16 +1064,13 @@
 
       function fillForm(data) {
         $("buyerCode").value = data.buyer_code || "";
-        $("buyerName").value = data.buyer_name || "";
-        $("category").value = data.category || "";
-        $("market").value = data.market || "";
         $("exclStores").value = data.excl_stores || "";
         $("exclConceptUnit").value = data.excl_concept_unit || "";
         $("nonExclStores").value = data.non_excl_stores || "";
         $("valStoresDiff").value = data.val_stores_diff || "";
         $("valStoresPct").value = data.val_stores_pct || "";
-        $("exclSpace").value = data.excl_space ?? "Prioritized space";
-        $("nonExclSpace").value = data.non_excl_space ?? "Non-prioritized space";
+        $("exclSpace").value = data.excl_space ?? "Prioritized space (優先配置空間)";
+        $("nonExclSpace").value = data.non_excl_space ?? "Non-prioritized space (非優先配置空間)";
         $("valSpaceMetres").value = data.val_space_metres || "";
         $("exclGrowthPct").value = data.excl_growth_pct || "";
         $("nonExclGrowthPct").value = data.non_excl_growth_pct || "";
@@ -1049,7 +1084,7 @@
         $("mktCampaignFeature").checked = data.mkt_campaign_feature !== "No";
         $("mktRedemptionSpot").checked = data.mkt_redemption_spot !== "No";
         $("mktOtherExcl").value = data.mkt_other_excl || "";
-        $("nonExclMkt").value = data.non_excl_mkt ?? "Standard offer";
+        $("nonExclMkt").value = data.non_excl_mkt ?? "Standard offer (標準方案)";
         $("valMktSavingPct").value = data.val_mkt_saving_pct || "";
         $("exclReviewLocal").value = data.excl_review_local || "";
         $("exclReviewRegional").value = data.excl_review_regional ?? "2";
@@ -1067,9 +1102,9 @@
 
       function resetForm() {
         fillForm({
-          excl_space: "Prioritized space",
-          non_excl_space: "Non-prioritized space",
-          non_excl_mkt: "Standard offer",
+          excl_space: "Prioritized space (優先配置空間)",
+          non_excl_space: "Non-prioritized space (非優先配置空間)",
+          non_excl_mkt: "Standard offer (標準方案)",
           excl_review_regional: "2",
           non_excl_review_regional: "0"
         });
@@ -1086,14 +1121,15 @@
       }
 
       function saveAll(list) {
+        list.sort((a, b) => String(a.buyer_code).localeCompare(String(b.buyer_code)));
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         renderCollected();
       }
 
       function upsertResponse(entry) {
         const list = loadAll();
-        const key = entry.buyer_code.toUpperCase();
-        const idx = list.findIndex(r => (r.buyer_code || "").toUpperCase() === key);
+        const key = String(entry.buyer_code).toUpperCase();
+        const idx = list.findIndex(r => String(r.buyer_code || "").toUpperCase() === key);
         if (idx >= 0) {
           list[idx] = entry;
         } else {
@@ -1107,7 +1143,7 @@
         if (!code) {
           $("buyerCode").classList.add("invalid");
           $("buyerCode").focus();
-          showToast("Please enter your Buyer Code first.");
+          showToast("Please select Buyer Code (01-12) / 請先選擇買手編號");
           return false;
         }
         $("buyerCode").classList.remove("invalid");
@@ -1166,17 +1202,15 @@
         $("respCount").textContent = list.length;
         const tbody = $("collectedBody");
         if (!list.length) {
-          tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-muted); padding:20px;">No responses saved yet. Fill in a <strong>Buyer Code</strong> above and click <strong>Submit &amp; Export My CSV</strong>.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">No responses saved yet. Select a <strong>Buyer Code (01-12)</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />尚無暫存回覆，請先於上方選擇 <strong>Buyer Code (01-12)</strong> 並點擊提交匯出。</td></tr>';
           return;
         }
         tbody.innerHTML = list.map((r, i) => {
           const dt = r.submitted_at ? r.submitted_at.slice(0, 16).replace("T", " ") : "";
-          const nameMkt = [r.buyer_name, r.market].filter(Boolean).join(" / ") || "-";
           const stores = (r.excl_stores || "-") + " / " + (r.non_excl_stores || "-");
           return `
             <tr>
               <td><span class="code-tag">${escapeHtml(r.buyer_code)}</span></td>
-              <td>${escapeHtml(nameMkt)}</td>
               <td>${escapeHtml(stores)}</td>
               <td>${escapeHtml(r.val_space_metres ? "+" + r.val_space_metres + "m" : "-")}</td>
               <td>${escapeHtml(r.val_growth_pt ? r.val_growth_pt + " pt" : "-")}</td>
@@ -1185,8 +1219,8 @@
               <td>${escapeHtml(r.val_reviews_diff || "-")}</td>
               <td style="white-space:nowrap; color:var(--text-muted);">${escapeHtml(dt)}</td>
               <td style="white-space:nowrap;">
-                <button type="button" class="btn btn-sm" data-load="${i}">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger-outline" data-del="${i}">Del</button>
+                <button type="button" class="btn btn-sm" data-load="${i}">Edit 編輯</button>
+                <button type="button" class="btn btn-sm btn-danger-outline" data-del="${i}">Del 刪除</button>
               </td>
             </tr>
           `;
@@ -1199,7 +1233,7 @@
             if (item) {
               fillForm(item);
               window.scrollTo({ top: 0, behavior: "smooth" });
-              showToast("Loaded " + item.buyer_code + " into form.");
+              showToast("Loaded Buyer Code " + item.buyer_code);
             }
           });
         });
@@ -1210,7 +1244,7 @@
             const items = loadAll();
             const removed = items.splice(idx, 1);
             saveAll(items);
-            showToast("Removed " + (removed[0]?.buyer_code || "entry") + ".");
+            showToast("Removed Buyer Code " + (removed[0]?.buyer_code || ""));
           });
         });
       }
@@ -1218,7 +1252,7 @@
       // Button events
       $("btnResetForm").addEventListener("click", () => {
         resetForm();
-        showToast("Form cleared.");
+        showToast("Form cleared / 表單已清空");
       });
 
       $("btnSaveOnly").addEventListener("click", async () => {
@@ -1226,7 +1260,7 @@
         const entry = readForm();
         upsertResponse(entry);
         await sendToWebhook(entry);
-        showToast("Saved response for " + entry.buyer_code + ".");
+        showToast("Saved Buyer Code " + entry.buyer_code + " / 已暫存");
       });
 
       $("btnSaveAndExportCsv").addEventListener("click", async () => {
@@ -1234,9 +1268,8 @@
         const entry = readForm();
         upsertResponse(entry);
         await sendToWebhook(entry);
-        const safeCode = entry.buyer_code.replace(/[^a-zA-Z0-9_-]/g, "_");
-        downloadFile(`watsons_survey_${safeCode}.csv`, toCsv([entry]), "text/csv;charset=utf-8;");
-        showToast("Saved & exported CSV for " + entry.buyer_code + ".");
+        downloadFile(`watsons_survey_buyer_${entry.buyer_code}.csv`, toCsv([entry]), "text/csv;charset=utf-8;");
+        showToast("Exported CSV for Buyer Code " + entry.buyer_code);
       });
 
       $("btnCopyEmail").addEventListener("click", async () => {
@@ -1251,7 +1284,7 @@
         ].filter(Boolean).join("; ");
 
         const summary = [
-          `Buyer Code: ${d.buyer_code}${d.buyer_name ? " (" + d.buyer_name + ")" : ""}${d.market ? " | Market: " + d.market : ""}`,
+          `Buyer Code: ${d.buyer_code}`,
           `1. Store distribution: Excl ${d.excl_stores || "-"} stores (New concept unit: ${d.excl_concept_unit || "-"}) vs Non-Excl ${d.non_excl_stores || "-"} stores | Value: ${d.val_stores_diff || "-"} stores / ${d.val_stores_pct || "-"}`,
           `2. Space allocation: ${d.excl_space} vs ${d.non_excl_space} | Value: +${d.val_space_metres || "-"} metres`,
           `3. Annual growth target: Excl ${d.excl_growth_pct || "-"}% vs Non-Excl ${d.non_excl_growth_pct || "-"}% | Value: ${d.val_growth_pt || "-"} pt`,
@@ -1264,7 +1297,7 @@
 
         try {
           await navigator.clipboard.writeText(summary);
-          showToast("Email summary copied to clipboard.");
+          showToast("Copied summary / 已複製摘要至剪貼簿");
         } catch {
           showToast("Clipboard blocked; please use Export CSV.");
         }
@@ -1273,30 +1306,30 @@
       $("btnExportAllCsv").addEventListener("click", () => {
         const list = loadAll();
         if (!list.length) {
-          showToast("No responses to export.");
+          showToast("No responses to export / 尚無資料可匯出");
           return;
         }
         const dateTag = new Date().toISOString().slice(0, 10);
         downloadFile(`watsons_exclusivity_master_${dateTag}.csv`, toCsv(list), "text/csv;charset=utf-8;");
-        showToast(`Exported ${list.length} response(s) to Master CSV.`);
+        showToast(`Exported ${list.length} response(s) / 已匯出總表`);
       });
 
       $("btnExportAllJson").addEventListener("click", () => {
         const list = loadAll();
         if (!list.length) {
-          showToast("No responses to export.");
+          showToast("No responses to export / 尚無資料可匯出");
           return;
         }
         const dateTag = new Date().toISOString().slice(0, 10);
         downloadFile(`watsons_exclusivity_master_${dateTag}.json`, JSON.stringify(list, null, 2), "application/json");
-        showToast(`Exported ${list.length} response(s) to JSON.`);
+        showToast(`Exported ${list.length} JSON response(s)`);
       });
 
       $("btnClearAll").addEventListener("click", () => {
         if (!loadAll().length) return;
-        if (confirm("Remove all collected responses from this browser?")) {
+        if (confirm("Remove all collected responses from this browser? / 確定要清空所有暫存回覆嗎？")) {
           saveAll([]);
-          showToast("Cleared all collected responses.");
+          showToast("Cleared all / 已清空");
         }
       });
 
@@ -1369,7 +1402,7 @@
             });
           }
         }
-        showToast(imported ? `Merged ${imported} response(s) by Buyer Code.` : "No valid responses found in file(s).");
+        showToast(imported ? `Merged ${imported} response(s) / 已合併 ${imported} 筆` : "No valid responses found / 找不到有效資料");
       }
 
       const dropZone = $("dropZone");
@@ -1403,10 +1436,10 @@
         const val = $("webhookUrlInput").value.trim();
         if (val) {
           localStorage.setItem(WEBHOOK_KEY, val);
-          showToast("Webhook URL saved.");
+          showToast("Webhook URL saved / 已儲存");
         } else {
           localStorage.removeItem(WEBHOOK_KEY);
-          showToast("Webhook URL cleared.");
+          showToast("Webhook URL cleared / 已清除");
         }
       });
       $("btnCopyShareLink").addEventListener("click", async () => {
@@ -1415,7 +1448,7 @@
         const link = val ? `${base}?webhook=${encodeURIComponent(val)}` : base;
         try {
           await navigator.clipboard.writeText(link);
-          showToast("Shareable link copied.");
+          showToast("Shareable link copied / 已複製分享連結");
         } catch {
           showToast("Could not copy link.");
         }
