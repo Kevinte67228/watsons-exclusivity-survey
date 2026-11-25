@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exclusive vs Non-Exclusive Commercial Value Survey</title>
+  <style>
+    :root {
+      --bg: #f3f6f8;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --border: #d8e2e8;
+      --text: #16222c;
+      --text-muted: #556575;
+      --primary: #008b94;
+      --primary-dark: #006c73;
+      --primary-soft: #e6f6f7;
+      --value-bg: #dff0e2;
+      --value-border: #b6d7bc;
+      --value-text: #14532d;
+      --accent: #0f766e;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(15, 35, 52, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px 14px 64px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .header-card {
+      border-top: 5px solid var(--primary);
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-weight: 600;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.2px;
+    }
+
+    .deadline-badge {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    h1 {
+      margin: 6px 0 8px;
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .context-box {
+      background: var(--surface-alt);
+      border-left: 3px solid var(--primary);
+      padding: 12px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .context-box strong {
+      color: var(--text);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .buyer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .req {
+      color: var(--danger);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 139, 148, 0.14);
+    }
+
+    input.invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 68px;
+    }
+
+    /* Survey Matrix Table */
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table.survey-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 820px;
+      font-size: 13.5px;
+    }
+
+    .survey-table th {
+      text-align: left;
+      padding: 12px 14px;
+      background: #f1f5f9;
+      border-bottom: 2px solid var(--border);
+      font-weight: 700;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .survey-table th.col-value {
+      background: var(--value-bg);
+      color: var(--value-text);
+      border-bottom-color: var(--value-border);
+    }
+
+    .survey-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .survey-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .survey-table td.col-measure {
+      width: 18%;
+      font-weight: 600;
+      background: #fafcfd;
+    }
+
+    .survey-table td.col-excl,
+    .survey-table td.col-nonexcl {
+      width: 28%;
+    }
+
+    .survey-table td.col-value {
+      width: 26%;
+      background: rgba(223, 240, 226, 0.45);
+    }
+
+    .measure-hint {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .inline-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .inline-input-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .inline-input-row .unit {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 48px;
+    }
+
+    .inline-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 62px;
+    }
+
+    .sub-block {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .auto-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--value-text);
+      background: var(--value-bg);
+      border: 1px solid var(--value-border);
+      padding: 1px 7px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    /* Buttons */
+    .actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--surface-alt);
+      border-color: #b8c7d1;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+    .btn-success {
+      background: #15803d;
+      border-color: #15803d;
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #166534;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .btn-danger-outline {
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .btn-danger-outline:hover {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    /* Collected Responses & Merge Section */
+    .drop-zone {
+      border: 2px dashed #b8c7d1;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      background: var(--surface-alt);
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+
+    .drop-zone.dragover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
+    .collected-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table.collected-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      min-width: 720px;
+    }
+
+    .collected-table th,
+    .collected-table td {
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .collected-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .collected-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .code-tag {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      font-size: 12px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #16222c;
+      color: #fff;
+      padding: 11px 16px;
+      border-radius: 9px;
+      font-size: 13.5px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 22px 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 16px; }
+      .btn { width: 100%; }
+      .btn-group { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="card header-card">
+      <div class="header-top">
+        <span class="badge">Watsons Regional EB Partners Renewal</span>
+        <span class="badge deadline-badge">Target Revert: By 30 Nov</span>
+      </div>
+      <h1>Exclusive vs Non-Exclusive Commercial Value Survey</h1>
+      <div class="context-box">
+        <strong>Objective:</strong> Provide a top-line view of the commercial value of <strong>Exclusive vs Non-Exclusive</strong> to support renewal discussions with Key regional EB partners and demonstrate the value of staying exclusive to Watsons. Please fill in your <strong>Buyer Code</strong> and advise on the benchmarks below.
+      </div>
+    </div>
+
+    <!-- Respondent Info -->
+    <div class="card">
+      <div class="section-title">
+        <span>1. Respondent Identification</span>
+        <span style="font-size:12px; color:var(--text-muted); font-weight:400;">~20 Buyers Survey</span>
+      </div>
+      <div class="buyer-grid">
+        <div class="field">
+          <label for="buyerCode">Buyer Code <span class="req">*</span></label>
+          <input type="text" id="buyerCode" placeholder="e.g. B01, BUYER-TW-01" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="buyerName">Buyer Name / Initials (Optional)</label>
+          <input type="text" id="buyerName" placeholder="e.g. Chris" />
+        </div>
+        <div class="field">
+          <label for="category">Category / Team (Optional)</label>
+          <input type="text" id="category" placeholder="e.g. Skincare, Health" />
+        </div>
+        <div class="field">
+          <label for="market">Market / Region (Optional)</label>
+          <select id="market">
+            <option value="">-- Select Market --</option>
+            <option value="Regional">Regional</option>
+            <option value="TW">Taiwan (TW)</option>
+            <option value="HK">Hong Kong (HK)</option>
+            <option value="SG">Singapore (SG)</option>
+            <option value="MY">Malaysia (MY)</option>
+            <option value="TH">Thailand (TH)</option>
+            <option value="ID">Indonesia (ID)</option>
+            <option value="PH">Philippines (PH)</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Measures Benchmark Table -->
+    <div class="card">
+      <div class="section-title">
+        <span>2. Key Measures &amp; Exclusivity Value Benchmarks</span>
+        <button type="button" class="btn btn-sm" id="btnResetForm">Clear Form</button>
+      </div>
+
+      <div class="matrix-wrap">
+        <table class="survey-table">
+          <thead>
+            <tr>
+              <th>Key Measure</th>
+              <th>Exclusive Offer</th>
+              <th>Non-Exclusive Offer</th>
+              <th class="col-value">Exclusivity Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1: Store distribution -->
+            <tr>
+              <td class="col-measure">
+                Store distribution
+                <span class="measure-hint">Store count &amp; concept unit</span>
+              </td>
+              <td class="col-excl">
+                <div class="inline-input-row">
+                  <input type="number" id="exclStores" min="0" placeholder="e.g. 500" />
+                  <span class="unit">stores</span>
+                </div>
+                <div class="sub-block">
+                  <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">New concept store brand unit?</label>
+                  <select id="exclConceptUnit">
+                    <option value="">-- Select --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Selected key stores">Selected key stores</option>
+                    <option value="TBD">TBD</option>
+                  </select>
+                </div>
+              </td>
+              <td class="col-nonexcl">
+                <div class="inline-input-row">
+                  <input type="number" id="nonExclStores" min="0" placeholder="e.g. 250" />
+                  <span class="unit">stores</span>
+                </div>
+              </td>
+              <td class="col-value">
+                <span class="auto-pill">Auto-calculated / Editable</span>
+                <div class="inline-input-row">
+                  <span class="inline-label">+ stores</span>
+                  <input type="text" id="valStoresDiff" placeholder="+ ___ stores" />
+                </div>
+                <div class="inline-input-row">
+                  <span class="inline-label">+ %</span>
+                  <input type="text" id="valStoresPct" placeholder="+ ___%" />
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2: Space allocation -->
+            <tr>
+              <td class="col-measure">
+                Space allocation
+                <span class="measure-hint">Shelf / gondola priority</span>
+              </td>
+              <td class="col-excl">
+                <input type="text" id="exclSpace" value="Prioritized space" />
+              </td>
+              <td class="col-nonexcl">
+                <input type="text" id="nonExclSpace" value="Non-prioritized space" />
+              </td>
+              <td class="col-value">
+                <div class="inline-input-row">
+                  <span class="inline-label">+</span>
+                  <input type="number" id="valSpaceMetres" step="0.1" min="0" placeholder="e.g. 1.5" />
+                  <span class="unit">metres</span>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 3: Annual growth target -->
+            <tr>
+              <td class="col-measure">
+                Annual growth target
+                <span class="measure-hint">YoY target comparison</span>
+              </td>
+              <td class="col-excl">
+                <div class="inline-input-row">
+                  <input type="number" id="exclGrowthPct" step="0.1" placeholder="e.g. 20" />
+                  <span class="unit">%</span>
+                </div>
+              </td>
+              <td class="col-nonexcl">
+                <div class="inline-input-row">
+                  <input type="number" id="nonExclGrowthPct" step="0.1" placeholder="e.g. 10" />
+                  <span class="unit">%</span>
+                </div>
+              </td>
+              <td class="col-value">
+                <span class="auto-pill">Auto-calculated / Editable</span>
+                <div class="inline-input-row">
+                  <span class="inline-label">+</span>
+                  <input type="text" id="valGrowthPt" placeholder="+ ___ pt" />
+                  <span class="unit">pt</span>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 4: Listing fee -->
+            <tr>
+              <td class="col-measure">
+                Listing fee
+                <span class="measure-hint">Fee structure / waiver</span>
+              </td>
+              <td class="col-excl">
+                <input type="text" id="exclListingFee" placeholder="e.g. Waived / HKD 0" />
+              </td>
+              <td class="col-nonexcl">
+                <input type="text" id="nonExclListingFee" placeholder="e.g. Standard listing fee" />
+              </td>
+              <td class="col-value">
+                <div class="inline-input-row">
+                  <span class="inline-label">Saving of</span>
+                  <input type="text" id="valListingSaving" placeholder="e.g. 100% / HKD 50,000" />
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 5: Marketing Support -->
+            <tr>
+              <td class="col-measure">
+                Marketing Support
+                <span class="measure-hint">Priority allocation &amp; preferential package</span>
+              </td>
+              <td class="col-excl">
+                <div class="check-list">
+                  <label class="check-item">
+                    <input type="checkbox" id="mktKeyStore" checked />
+                    <span>Key store activation</span>
+                  </label>
+                  <input type="text" id="mktKeyStoreFreq" placeholder="Frequency? e.g. 4 times/year" style="margin-left:23px; width:calc(100% - 23px);" />
+
+                  <label class="check-item">
+                    <input type="checkbox" id="mktEventBooth" checked />
+                    <span>Category event booth</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="mktCampaignFeature" checked />
+                    <span>Category campaign feature</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="mktRedemptionSpot" checked />
+                    <span>Redemption spot</span>
+                  </label>
+                </div>
+                <div class="sub-block">
+                  <input type="text" id="mktOtherExcl" placeholder="Other marketing package details (optional)" />
+                </div>
+              </td>
+              <td class="col-nonexcl">
+                <input type="text" id="nonExclMkt" value="Standard offer" />
+              </td>
+              <td class="col-value">
+                <div class="inline-input-row">
+                  <span class="inline-label">Saving of</span>
+                  <input type="text" id="valMktSavingPct" placeholder="e.g. 25" />
+                  <span class="unit">%</span>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 6: Business reviews -->
+            <tr>
+              <td class="col-measure">
+                Business reviews
+                <span class="measure-hint">Local &amp; Regional cadence</span>
+              </td>
+              <td class="col-excl">
+                <div class="inline-input-row">
+                  <span class="inline-label">Local:</span>
+                  <input type="number" id="exclReviewLocal" min="0" placeholder="e.g. 4" />
+                  <span class="unit">times/yr</span>
+                </div>
+                <div class="inline-input-row">
+                  <span class="inline-label">Regional:</span>
+                  <input type="number" id="exclReviewRegional" min="0" value="2" />
+                  <span class="unit">times/yr</span>
+                </div>
+              </td>
+              <td class="col-nonexcl">
+                <div class="inline-input-row">
+                  <span class="inline-label">Local:</span>
+                  <input type="number" id="nonExclReviewLocal" min="0" placeholder="e.g. 2" />
+                  <span class="unit">times/yr</span>
+                </div>
+                <div class="inline-input-row">
+                  <span class="inline-label">Regional:</span>
+                  <input type="number" id="nonExclReviewRegional" min="0" value="0" />
+                  <span class="unit">times/yr (0 = none)</span>
+                </div>
+              </td>
+              <td class="col-value">
+                <span class="auto-pill">Auto-calculated / Editable</span>
+                <div class="inline-input-row">
+                  <span class="inline-label">+</span>
+                  <input type="text" id="valReviewsDiff" placeholder="+ ___ reviews" />
+                  <span class="unit">reviews</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Additional Suggested Key Measures -->
+      <div style="margin-top:16px;">
+        <div class="buyer-grid">
+          <div class="field">
+            <label for="otherMeasures">Other Suggested Key Measures to Highlight Exclusivity Value</label>
+            <textarea id="otherMeasures" placeholder="e.g. Exclusive SKU launch window, CRM / member data sharing, O+O e-commerce banner support..."></textarea>
+          </div>
+          <div class="field">
+            <label for="comments">General Comments / Notes</label>
+            <textarea id="comments" placeholder="Any remarks for the renewal discussion with regional EB partners..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit & Export Actions -->
+      <div class="actions-bar">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" id="btnSaveAndExportCsv">Submit &amp; Export My CSV</button>
+          <button type="button" class="btn" id="btnSaveOnly">Save to Browser List</button>
+          <button type="button" class="btn" id="btnCopyEmail">Copy Summary for Email</button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm" id="btnOpenWebhookModal">Cloud Sync Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collected Responses & Consolidator -->
+    <div class="card">
+      <div class="section-title">
+        <span>3. Collected Responses &amp; Master Export (<span id="respCount">0</span>)</span>
+        <div class="btn-group">
+          <button type="button" class="btn btn-success btn-sm" id="btnExportAllCsv">Export All as Master CSV</button>
+          <button type="button" class="btn btn-sm" id="btnExportAllJson">Export All JSON</button>
+          <button type="button" class="btn btn-sm btn-danger-outline" id="btnClearAll">Clear All</button>
+        </div>
+      </div>
+
+      <div class="drop-zone" id="dropZone">
+        <strong>Organizer Merge Tool:</strong> Drag &amp; drop multiple buyers' <code>.csv</code> or <code>.json</code> response files here (or click to select files) to merge &amp; deduplicate by <strong>Buyer Code</strong>.
+        <input type="file" id="fileInput" multiple accept=".csv,.json" style="display:none;" />
+      </div>
+
+      <div class="collected-table-wrap">
+        <table class="collected-table">
+          <thead>
+            <tr>
+              <th>Buyer Code</th>
+              <th>Name / Market</th>
+              <th>Stores (Excl / Non)</th>
+              <th>Space (+m)</th>
+              <th>Growth (+pt)</th>
+              <th>Listing Saving</th>
+              <th>Mkt Saving</th>
+              <th>Reviews (+/yr)</th>
+              <th>Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="collectedBody">
+            <tr>
+              <td colspan="10" style="text-align:center; color:var(--text-muted); padding:20px;">
+                No responses saved yet. Fill in a <strong>Buyer Code</strong> above and click <strong>Submit &amp; Export My CSV</strong>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cloud Sync Modal -->
+  <div class="modal-backdrop" id="webhookModal">
+    <div class="modal">
+      <div class="section-title">
+        <span>Optional: Google Sheets Auto-Collection</span>
+        <button type="button" class="btn btn-sm" id="btnCloseModal">Close</button>
+      </div>
+      <p style="font-size:13px; color:var(--text-muted); margin-top:0;">
+        By default, each buyer can export their CSV/JSON or copy the email summary, and you can merge all ~20 files above. If you want responses to also auto-submit to a Google Sheet, deploy a Google Apps Script Web App and paste its URL below (or pass <code>?webhook=YOUR_URL</code> in the link you share).
+      </p>
+      <div class="field" style="margin-bottom:12px;">
+        <label for="webhookUrlInput">Webhook / Google Apps Script URL</label>
+        <input type="url" id="webhookUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
+      </div>
+      <div class="btn-group" style="margin-bottom:14px;">
+        <button type="button" class="btn btn-primary btn-sm" id="btnSaveWebhook">Save Webhook URL</button>
+        <button type="button" class="btn btn-sm" id="btnCopyShareLink">Copy Shareable Link with Webhook</button>
+      </div>
+      <details>
+        <summary style="font-size:13px; font-weight:600; cursor:pointer; color:var(--primary-dark);">View Google Apps Script Template</summary>
+        <div class="code-block" id="appsScriptCode">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(Object.keys(data));
+  }
+  sheet.appendRow(Object.values(data));
+  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "watsons_exclusivity_survey_responses_v1";
+      const WEBHOOK_KEY = "watsons_exclusivity_survey_webhook_v1";
+
+      const CSV_COLUMNS = [
+        "buyer_code",
+        "buyer_name",
+        "category",
+        "market",
+        "excl_stores",
+        "excl_concept_unit",
+        "non_excl_stores",
+        "val_stores_diff",
+        "val_stores_pct",
+        "excl_space",
+        "non_excl_space",
+        "val_space_metres",
+        "excl_growth_pct",
+        "non_excl_growth_pct",
+        "val_growth_pt",
+        "excl_listing_fee",
+        "non_excl_listing_fee",
+        "val_listing_saving",
+        "mkt_key_store",
+        "mkt_key_store_freq",
+        "mkt_event_booth",
+        "mkt_campaign_feature",
+        "mkt_redemption_spot",
+        "mkt_other_excl",
+        "non_excl_mkt",
+        "val_mkt_saving_pct",
+        "excl_review_local",
+        "excl_review_regional",
+        "non_excl_review_local",
+        "non_excl_review_regional",
+        "val_reviews_diff",
+        "other_measures",
+        "comments",
+        "submitted_at"
+      ];
+
+      const $ = (id) => document.getElementById(id);
+
+      function showToast(msg) {
+        const el = $("toast");
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => el.classList.remove("show"), 2800);
+      }
+
+      // Check URL ?webhook=... param
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("webhook")) {
+        localStorage.setItem(WEBHOOK_KEY, params.get("webhook").trim());
+      }
+      if (params.get("buyer")) {
+        $("buyerCode").value = params.get("buyer").trim();
+      }
+
+      // Auto-calculation handlers
+      let manualStoresDiff = false;
+      let manualStoresPct = false;
+      let manualGrowthPt = false;
+      let manualReviewsDiff = false;
+
+      $("valStoresDiff").addEventListener("input", () => { manualStoresDiff = $("valStoresDiff").value.trim() !== ""; });
+      $("valStoresPct").addEventListener("input", () => { manualStoresPct = $("valStoresPct").value.trim() !== ""; });
+      $("valGrowthPt").addEventListener("input", () => { manualGrowthPt = $("valGrowthPt").value.trim() !== ""; });
+      $("valReviewsDiff").addEventListener("input", () => { manualReviewsDiff = $("valReviewsDiff").value.trim() !== ""; });
+
+      function recalcStores() {
+        const ex = parseFloat($("exclStores").value);
+        const non = parseFloat($("nonExclStores").value);
+        if (!isNaN(ex) && !isNaN(non)) {
+          const diff = ex - non;
+          if (!manualStoresDiff) {
+            $("valStoresDiff").value = (diff >= 0 ? "+" : "") + diff;
+          }
+          if (!manualStoresPct && non > 0) {
+            const pct = ((diff / non) * 100).toFixed(1).replace(/\.0$/, "");
+            $("valStoresPct").value = (diff >= 0 ? "+" : "") + pct + "%";
+          }
+        }
+      }
+
+      function recalcGrowth() {
+        const ex = parseFloat($("exclGrowthPct").value);
+        const non = parseFloat($("nonExclGrowthPct").value);
+        if (!isNaN(ex) && !isNaN(non) && !manualGrowthPt) {
+          const diff = (ex - non).toFixed(1).replace(/\.0$/, "");
+          $("valGrowthPt").value = (parseFloat(diff) >= 0 ? "+" : "") + diff;
+        }
+      }
+
+      function recalcReviews() {
+        const exL = parseFloat($("exclReviewLocal").value);
+        const exR = parseFloat($("exclReviewRegional").value) || 0;
+        const nonL = parseFloat($("nonExclReviewLocal").value);
+        const nonR = parseFloat($("nonExclReviewRegional").value) || 0;
+        if (!isNaN(exL) && !isNaN(nonL) && !manualReviewsDiff) {
+          const diff = (exL + exR) - (nonL + nonR);
+          $("valReviewsDiff").value = (diff >= 0 ? "+" : "") + diff;
+        }
+      }
+
+      ["exclStores", "nonExclStores"].forEach(id => $(id).addEventListener("input", recalcStores));
+      ["exclGrowthPct", "nonExclGrowthPct"].forEach(id => $(id).addEventListener("input", recalcGrowth));
+      ["exclReviewLocal", "exclReviewRegional", "nonExclReviewLocal", "nonExclReviewRegional"].forEach(id => $(id).addEventListener("input", recalcReviews));
+
+      function readForm() {
+        return {
+          buyer_code: $("buyerCode").value.trim(),
+          buyer_name: $("buyerName").value.trim(),
+          category: $("category").value.trim(),
+          market: $("market").value,
+          excl_stores: $("exclStores").value.trim(),
+          excl_concept_unit: $("exclConceptUnit").value,
+          non_excl_stores: $("nonExclStores").value.trim(),
+          val_stores_diff: $("valStoresDiff").value.trim(),
+          val_stores_pct: $("valStoresPct").value.trim(),
+          excl_space: $("exclSpace").value.trim(),
+          non_excl_space: $("nonExclSpace").value.trim(),
+          val_space_metres: $("valSpaceMetres").value.trim(),
+          excl_growth_pct: $("exclGrowthPct").value.trim(),
+          non_excl_growth_pct: $("nonExclGrowthPct").value.trim(),
+          val_growth_pt: $("valGrowthPt").value.trim(),
+          excl_listing_fee: $("exclListingFee").value.trim(),
+          non_excl_listing_fee: $("nonExclListingFee").value.trim(),
+          val_listing_saving: $("valListingSaving").value.trim(),
+          mkt_key_store: $("mktKeyStore").checked ? "Yes" : "No",
+          mkt_key_store_freq: $("mktKeyStoreFreq").value.trim(),
+          mkt_event_booth: $("mktEventBooth").checked ? "Yes" : "No",
+          mkt_campaign_feature: $("mktCampaignFeature").checked ? "Yes" : "No",
+          mkt_redemption_spot: $("mktRedemptionSpot").checked ? "Yes" : "No",
+          mkt_other_excl: $("mktOtherExcl").value.trim(),
+          non_excl_mkt: $("nonExclMkt").value.trim(),
+          val_mkt_saving_pct: $("valMktSavingPct").value.trim(),
+          excl_review_local: $("exclReviewLocal").value.trim(),
+          excl_review_regional: $("exclReviewRegional").value.trim(),
+          non_excl_review_local: $("nonExclReviewLocal").value.trim(),
+          non_excl_review_regional: $("nonExclReviewRegional").value.trim(),
+          val_reviews_diff: $("valReviewsDiff").value.trim(),
+          other_measures: $("otherMeasures").value.trim(),
+          comments: $("comments").value.trim(),
+          submitted_at: new Date().toISOString()
+        };
+      }
+
+      function fillForm(data) {
+        $("buyerCode").value = data.buyer_code || "";
+        $("buyerName").value = data.buyer_name || "";
+        $("category").value = data.category || "";
+        $("market").value = data.market || "";
+        $("exclStores").value = data.excl_stores || "";
+        $("exclConceptUnit").value = data.excl_concept_unit || "";
+        $("nonExclStores").value = data.non_excl_stores || "";
+        $("valStoresDiff").value = data.val_stores_diff || "";
+        $("valStoresPct").value = data.val_stores_pct || "";
+        $("exclSpace").value = data.excl_space ?? "Prioritized space";
+        $("nonExclSpace").value = data.non_excl_space ?? "Non-prioritized space";
+        $("valSpaceMetres").value = data.val_space_metres || "";
+        $("exclGrowthPct").value = data.excl_growth_pct || "";
+        $("nonExclGrowthPct").value = data.non_excl_growth_pct || "";
+        $("valGrowthPt").value = data.val_growth_pt || "";
+        $("exclListingFee").value = data.excl_listing_fee || "";
+        $("nonExclListingFee").value = data.non_excl_listing_fee || "";
+        $("valListingSaving").value = data.val_listing_saving || "";
+        $("mktKeyStore").checked = data.mkt_key_store !== "No";
+        $("mktKeyStoreFreq").value = data.mkt_key_store_freq || "";
+        $("mktEventBooth").checked = data.mkt_event_booth !== "No";
+        $("mktCampaignFeature").checked = data.mkt_campaign_feature !== "No";
+        $("mktRedemptionSpot").checked = data.mkt_redemption_spot !== "No";
+        $("mktOtherExcl").value = data.mkt_other_excl || "";
+        $("nonExclMkt").value = data.non_excl_mkt ?? "Standard offer";
+        $("valMktSavingPct").value = data.val_mkt_saving_pct || "";
+        $("exclReviewLocal").value = data.excl_review_local || "";
+        $("exclReviewRegional").value = data.excl_review_regional ?? "2";
+        $("nonExclReviewLocal").value = data.non_excl_review_local || "";
+        $("nonExclReviewRegional").value = data.non_excl_review_regional ?? "0";
+        $("valReviewsDiff").value = data.val_reviews_diff || "";
+        $("otherMeasures").value = data.other_measures || "";
+        $("comments").value = data.comments || "";
+
+        manualStoresDiff = !!data.val_stores_diff;
+        manualStoresPct = !!data.val_stores_pct;
+        manualGrowthPt = !!data.val_growth_pt;
+        manualReviewsDiff = !!data.val_reviews_diff;
+      }
+
+      function resetForm() {
+        fillForm({
+          excl_space: "Prioritized space",
+          non_excl_space: "Non-prioritized space",
+          non_excl_mkt: "Standard offer",
+          excl_review_regional: "2",
+          non_excl_review_regional: "0"
+        });
+        $("buyerCode").classList.remove("invalid");
+      }
+
+      function loadAll() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveAll(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        renderCollected();
+      }
+
+      function upsertResponse(entry) {
+        const list = loadAll();
+        const key = entry.buyer_code.toUpperCase();
+        const idx = list.findIndex(r => (r.buyer_code || "").toUpperCase() === key);
+        if (idx >= 0) {
+          list[idx] = entry;
+        } else {
+          list.push(entry);
+        }
+        saveAll(list);
+      }
+
+      function validateForm() {
+        const code = $("buyerCode").value.trim();
+        if (!code) {
+          $("buyerCode").classList.add("invalid");
+          $("buyerCode").focus();
+          showToast("Please enter your Buyer Code first.");
+          return false;
+        }
+        $("buyerCode").classList.remove("invalid");
+        return true;
+      }
+
+      async function sendToWebhook(entry) {
+        const url = localStorage.getItem(WEBHOOK_KEY);
+        if (!url) return;
+        try {
+          await fetch(url, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(entry)
+          });
+        } catch (err) {
+          console.warn("Webhook sync skipped:", err);
+        }
+      }
+
+      function escapeCsvCell(val) {
+        const s = val == null ? "" : String(val);
+        if (/[",\n\r]/.test(s)) {
+          return '"' + s.replace(/"/g, '""') + '"';
+        }
+        return s;
+      }
+
+      function toCsv(rows) {
+        const header = CSV_COLUMNS.join(",");
+        const body = rows.map(row => CSV_COLUMNS.map(col => escapeCsvCell(row[col])).join(","));
+        return "\uFEFF" + [header, ...body].join("\r\n");
+      }
+
+      function downloadFile(filename, content, mime) {
+        const blob = new Blob([content], { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function escapeHtml(str) {
+        return String(str || "").replace(/[&<>"']/g, s => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[s]));
+      }
+
+      function renderCollected() {
+        const list = loadAll();
+        $("respCount").textContent = list.length;
+        const tbody = $("collectedBody");
+        if (!list.length) {
+          tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-muted); padding:20px;">No responses saved yet. Fill in a <strong>Buyer Code</strong> above and click <strong>Submit &amp; Export My CSV</strong>.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = list.map((r, i) => {
+          const dt = r.submitted_at ? r.submitted_at.slice(0, 16).replace("T", " ") : "";
+          const nameMkt = [r.buyer_name, r.market].filter(Boolean).join(" / ") || "-";
+          const stores = (r.excl_stores || "-") + " / " + (r.non_excl_stores || "-");
+          return `
+            <tr>
+              <td><span class="code-tag">${escapeHtml(r.buyer_code)}</span></td>
+              <td>${escapeHtml(nameMkt)}</td>
+              <td>${escapeHtml(stores)}</td>
+              <td>${escapeHtml(r.val_space_metres ? "+" + r.val_space_metres + "m" : "-")}</td>
+              <td>${escapeHtml(r.val_growth_pt ? r.val_growth_pt + " pt" : "-")}</td>
+              <td>${escapeHtml(r.val_listing_saving || "-")}</td>
+              <td>${escapeHtml(r.val_mkt_saving_pct ? r.val_mkt_saving_pct + "%" : "-")}</td>
+              <td>${escapeHtml(r.val_reviews_diff || "-")}</td>
+              <td style="white-space:nowrap; color:var(--text-muted);">${escapeHtml(dt)}</td>
+              <td style="white-space:nowrap;">
+                <button type="button" class="btn btn-sm" data-load="${i}">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger-outline" data-del="${i}">Del</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        tbody.querySelectorAll("[data-load]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.getAttribute("data-load"), 10);
+            const item = loadAll()[idx];
+            if (item) {
+              fillForm(item);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              showToast("Loaded " + item.buyer_code + " into form.");
+            }
+          });
+        });
+
+        tbody.querySelectorAll("[data-del]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.getAttribute("data-del"), 10);
+            const items = loadAll();
+            const removed = items.splice(idx, 1);
+            saveAll(items);
+            showToast("Removed " + (removed[0]?.buyer_code || "entry") + ".");
+          });
+        });
+      }
+
+      // Button events
+      $("btnResetForm").addEventListener("click", () => {
+        resetForm();
+        showToast("Form cleared.");
+      });
+
+      $("btnSaveOnly").addEventListener("click", async () => {
+        if (!validateForm()) return;
+        const entry = readForm();
+        upsertResponse(entry);
+        await sendToWebhook(entry);
+        showToast("Saved response for " + entry.buyer_code + ".");
+      });
+
+      $("btnSaveAndExportCsv").addEventListener("click", async () => {
+        if (!validateForm()) return;
+        const entry = readForm();
+        upsertResponse(entry);
+        await sendToWebhook(entry);
+        const safeCode = entry.buyer_code.replace(/[^a-zA-Z0-9_-]/g, "_");
+        downloadFile(`watsons_survey_${safeCode}.csv`, toCsv([entry]), "text/csv;charset=utf-8;");
+        showToast("Saved & exported CSV for " + entry.buyer_code + ".");
+      });
+
+      $("btnCopyEmail").addEventListener("click", async () => {
+        if (!validateForm()) return;
+        const d = readForm();
+        const mktItems = [
+          d.mkt_key_store === "Yes" ? `Key store activation (${d.mkt_key_store_freq || "TBD"})` : null,
+          d.mkt_event_booth === "Yes" ? "Category event booth" : null,
+          d.mkt_campaign_feature === "Yes" ? "Category campaign feature" : null,
+          d.mkt_redemption_spot === "Yes" ? "Redemption spot" : null,
+          d.mkt_other_excl || null
+        ].filter(Boolean).join("; ");
+
+        const summary = [
+          `Buyer Code: ${d.buyer_code}${d.buyer_name ? " (" + d.buyer_name + ")" : ""}${d.market ? " | Market: " + d.market : ""}`,
+          `1. Store distribution: Excl ${d.excl_stores || "-"} stores (New concept unit: ${d.excl_concept_unit || "-"}) vs Non-Excl ${d.non_excl_stores || "-"} stores | Value: ${d.val_stores_diff || "-"} stores / ${d.val_stores_pct || "-"}`,
+          `2. Space allocation: ${d.excl_space} vs ${d.non_excl_space} | Value: +${d.val_space_metres || "-"} metres`,
+          `3. Annual growth target: Excl ${d.excl_growth_pct || "-"}% vs Non-Excl ${d.non_excl_growth_pct || "-"}% | Value: ${d.val_growth_pt || "-"} pt`,
+          `4. Listing fee: Excl ${d.excl_listing_fee || "-"} vs Non-Excl ${d.non_excl_listing_fee || "-"} | Value: Saving of ${d.val_listing_saving || "-"}`,
+          `5. Marketing Support: Excl [${mktItems}] vs Non-Excl ${d.non_excl_mkt} | Value: Saving of ${d.val_mkt_saving_pct || "-"}%`,
+          `6. Business reviews: Excl (Local ${d.excl_review_local || "-"}/yr, Regional ${d.excl_review_regional || "2"}/yr) vs Non-Excl (Local ${d.non_excl_review_local || "-"}/yr, Regional ${d.non_excl_review_regional || "0"}/yr) | Value: ${d.val_reviews_diff || "-"} reviews`,
+          d.other_measures ? `Other Suggested Measures: ${d.other_measures}` : null,
+          d.comments ? `Comments: ${d.comments}` : null
+        ].filter(Boolean).join("\n");
+
+        try {
+          await navigator.clipboard.writeText(summary);
+          showToast("Email summary copied to clipboard.");
+        } catch {
+          showToast("Clipboard blocked; please use Export CSV.");
+        }
+      });
+
+      $("btnExportAllCsv").addEventListener("click", () => {
+        const list = loadAll();
+        if (!list.length) {
+          showToast("No responses to export.");
+          return;
+        }
+        const dateTag = new Date().toISOString().slice(0, 10);
+        downloadFile(`watsons_exclusivity_master_${dateTag}.csv`, toCsv(list), "text/csv;charset=utf-8;");
+        showToast(`Exported ${list.length} response(s) to Master CSV.`);
+      });
+
+      $("btnExportAllJson").addEventListener("click", () => {
+        const list = loadAll();
+        if (!list.length) {
+          showToast("No responses to export.");
+          return;
+        }
+        const dateTag = new Date().toISOString().slice(0, 10);
+        downloadFile(`watsons_exclusivity_master_${dateTag}.json`, JSON.stringify(list, null, 2), "application/json");
+        showToast(`Exported ${list.length} response(s) to JSON.`);
+      });
+
+      $("btnClearAll").addEventListener("click", () => {
+        if (!loadAll().length) return;
+        if (confirm("Remove all collected responses from this browser?")) {
+          saveAll([]);
+          showToast("Cleared all collected responses.");
+        }
+      });
+
+      // CSV Parser for Batch Merge
+      function parseCsvText(text) {
+        const clean = text.replace(/^\uFEFF/, "");
+        const rows = [];
+        let cur = [];
+        let field = "";
+        let inQuotes = false;
+        for (let i = 0; i < clean.length; i++) {
+          const ch = clean[i];
+          if (inQuotes) {
+            if (ch === '"' && clean[i + 1] === '"') {
+              field += '"';
+              i++;
+            } else if (ch === '"') {
+              inQuotes = false;
+            } else {
+              field += ch;
+            }
+          } else {
+            if (ch === '"') {
+              inQuotes = true;
+            } else if (ch === ",") {
+              cur.push(field);
+              field = "";
+            } else if (ch === "\r" || ch === "\n") {
+              if (ch === "\r" && clean[i + 1] === "\n") i++;
+              cur.push(field);
+              if (cur.some(c => c !== "")) rows.push(cur);
+              cur = [];
+              field = "";
+            } else {
+              field += ch;
+            }
+          }
+        }
+        cur.push(field);
+        if (cur.some(c => c !== "")) rows.push(cur);
+        if (rows.length < 2) return [];
+        const headers = rows[0];
+        return rows.slice(1).map(vals => {
+          const obj = {};
+          headers.forEach((h, idx) => { obj[h.trim()] = vals[idx] ?? ""; });
+          return obj;
+        }).filter(o => o.buyer_code);
+      }
+
+      async function handleFiles(files) {
+        let imported = 0;
+        for (const file of files) {
+          const text = await file.text();
+          if (file.name.toLowerCase().endsWith(".json")) {
+            try {
+              const parsed = JSON.parse(text);
+              const arr = Array.isArray(parsed) ? parsed : [parsed];
+              arr.forEach(item => {
+                if (item && item.buyer_code) {
+                  upsertResponse(item);
+                  imported++;
+                }
+              });
+            } catch { /* ignore invalid json */ }
+          } else {
+            const arr = parseCsvText(text);
+            arr.forEach(item => {
+              upsertResponse(item);
+              imported++;
+            });
+          }
+        }
+        showToast(imported ? `Merged ${imported} response(s) by Buyer Code.` : "No valid responses found in file(s).");
+      }
+
+      const dropZone = $("dropZone");
+      const fileInput = $("fileInput");
+      dropZone.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length) handleFiles(fileInput.files);
+        fileInput.value = "";
+      });
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+      });
+      dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+      });
+
+      // Webhook Modal
+      $("btnOpenWebhookModal").addEventListener("click", () => {
+        $("webhookUrlInput").value = localStorage.getItem(WEBHOOK_KEY) || "";
+        $("webhookModal").classList.add("open");
+      });
+      $("btnCloseModal").addEventListener("click", () => $("webhookModal").classList.remove("open"));
+      $("webhookModal").addEventListener("click", (e) => {
+        if (e.target === $("webhookModal")) $("webhookModal").classList.remove("open");
+      });
+      $("btnSaveWebhook").addEventListener("click", () => {
+        const val = $("webhookUrlInput").value.trim();
+        if (val) {
+          localStorage.setItem(WEBHOOK_KEY, val);
+          showToast("Webhook URL saved.");
+        } else {
+          localStorage.removeItem(WEBHOOK_KEY);
+          showToast("Webhook URL cleared.");
+        }
+      });
+      $("btnCopyShareLink").addEventListener("click", async () => {
+        const val = $("webhookUrlInput").value.trim();
+        const base = window.location.origin + window.location.pathname;
+        const link = val ? `${base}?webhook=${encodeURIComponent(val)}` : base;
+        try {
+          await navigator.clipboard.writeText(link);
+          showToast("Shareable link copied.");
+        } catch {
+          showToast("Could not copy link.");
+        }
+      });
+
+      renderCollected();
+    })();
+  </script>
+</body>
+</html>
