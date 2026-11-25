@@ -545,28 +545,22 @@
       </div>
     </div>
 
-    <!-- Respondent Info: Buyer Code 01-12 Only -->
+    <!-- Respondent Info: Category -->
     <div class="card">
       <div class="section-title">
         <span>1. Respondent Identification / 填寫者識別</span>
       </div>
       <div class="buyer-row">
         <div class="field">
-          <label for="buyerCode">Buyer Code / 買手編號 <span class="req">*</span></label>
-          <select id="buyerCode">
-            <option value="">-- Select Buyer Code (01 - 12) / 請選擇買手編號 --</option>
-            <option value="01">Buyer Code 01</option>
-            <option value="02">Buyer Code 02</option>
-            <option value="03">Buyer Code 03</option>
-            <option value="04">Buyer Code 04</option>
-            <option value="05">Buyer Code 05</option>
-            <option value="06">Buyer Code 06</option>
-            <option value="07">Buyer Code 07</option>
-            <option value="08">Buyer Code 08</option>
-            <option value="09">Buyer Code 09</option>
-            <option value="10">Buyer Code 10</option>
-            <option value="11">Buyer Code 11</option>
-            <option value="12">Buyer Code 12</option>
+          <label for="categorySelect">Category / 品類負責人 <span class="req">*</span></label>
+          <select id="categorySelect">
+            <option value="">-- Select Category / 請選擇負責人 --</option>
+            <option value="Angela Chiang">Angela Chiang</option>
+            <option value="Berry Liu">Berry Liu</option>
+            <option value="Iris Yeh">Iris Yeh</option>
+            <option value="Olivia Lee">Olivia Lee</option>
+            <option value="Rita Lin">Rita Lin</option>
+            <option value="Yoyo Lin">Yoyo Lin</option>
           </select>
         </div>
       </div>
@@ -845,8 +839,8 @@
       </div>
 
       <div class="drop-zone" id="dropZone">
-        <strong>Organizer Merge Tool / 彙整工具：</strong> Drag &amp; drop multiple buyers' <code>.csv</code> or <code>.json</code> files here (or click to select) to merge by <strong>Buyer Code</strong>.<br />
-        將多位買手回傳的 <code>.csv</code> 或 <code>.json</code> 檔案拖曳至此（或點擊選取），即可依 <strong>Buyer Code</strong> 自動去重合併並匯出總表。
+        <strong>Organizer Merge Tool / 彙整工具：</strong> Drag &amp; drop multiple <code>.csv</code> or <code>.json</code> files here (or click to select) to merge by <strong>Category</strong>.<br />
+        將多位負責人回傳的 <code>.csv</code> 或 <code>.json</code> 檔案拖曳至此（或點擊選取），即可依 <strong>Category</strong> 自動去重合併並匯出總表。
         <input type="file" id="fileInput" multiple accept=".csv,.json" style="display:none;" />
       </div>
 
@@ -854,7 +848,7 @@
         <table class="collected-table">
           <thead>
             <tr>
-              <th>Buyer Code<br /><small>買手編號</small></th>
+              <th>Category<br /><small>品類負責人</small></th>
               <th>Stores (Excl / Non)<br /><small>店數 (獨家/非獨家)</small></th>
               <th>Space (+m)<br /><small>空間增量</small></th>
               <th>Growth (+pt)<br /><small>成長差距</small></th>
@@ -868,8 +862,8 @@
           <tbody id="collectedBody">
             <tr>
               <td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">
-                No responses saved yet. Select a <strong>Buyer Code (01-12)</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />
-                尚無暫存回覆，請先於上方選擇 <strong>Buyer Code (01-12)</strong> 並點擊提交匯出。
+                No responses saved yet. Select a <strong>Category</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />
+                尚無暫存回覆，請先於上方選擇 <strong>Category</strong> 並點擊提交匯出。
               </td>
             </tr>
           </tbody>
@@ -917,11 +911,11 @@
 
   <script>
     (function () {
-      const STORAGE_KEY = "watsons_exclusivity_survey_responses_v2";
+      const STORAGE_KEY = "watsons_exclusivity_survey_responses_v3";
       const WEBHOOK_KEY = "watsons_exclusivity_survey_webhook_v1";
 
       const CSV_COLUMNS = [
-        "buyer_code",
+        "category",
         "excl_stores",
         "excl_concept_unit",
         "non_excl_stores",
@@ -964,15 +958,15 @@
         showToast._t = setTimeout(() => el.classList.remove("show"), 2800);
       }
 
-      // Check URL ?webhook=... and ?buyer=... params
+      // Check URL ?webhook=... and ?category=... params
       const params = new URLSearchParams(window.location.search);
       if (params.get("webhook")) {
         localStorage.setItem(WEBHOOK_KEY, params.get("webhook").trim());
       }
-      if (params.get("buyer")) {
-        const b = params.get("buyer").trim().padStart(2, "0");
-        if (["01","02","03","04","05","06","07","08","09","10","11","12"].includes(b)) {
-          $("buyerCode").value = b;
+      if (params.get("category")) {
+        const c = params.get("category").trim();
+        if (["Angela Chiang","Berry Liu","Iris Yeh","Olivia Lee","Rita Lin","Yoyo Lin"].includes(c)) {
+          $("categorySelect").value = c;
         }
       }
 
@@ -1028,7 +1022,7 @@
 
       function readForm() {
         return {
-          buyer_code: $("buyerCode").value.trim(),
+          category: $("categorySelect").value.trim(),
           excl_stores: $("exclStores").value.trim(),
           excl_concept_unit: $("exclConceptUnit").value,
           non_excl_stores: $("nonExclStores").value.trim(),
@@ -1063,7 +1057,7 @@
       }
 
       function fillForm(data) {
-        $("buyerCode").value = data.buyer_code || "";
+        $("categorySelect").value = data.category || "";
         $("exclStores").value = data.excl_stores || "";
         $("exclConceptUnit").value = data.excl_concept_unit || "";
         $("nonExclStores").value = data.non_excl_stores || "";
@@ -1108,7 +1102,7 @@
           excl_review_regional: "2",
           non_excl_review_regional: "0"
         });
-        $("buyerCode").classList.remove("invalid");
+        $("categorySelect").classList.remove("invalid");
       }
 
       function loadAll() {
@@ -1121,15 +1115,15 @@
       }
 
       function saveAll(list) {
-        list.sort((a, b) => String(a.buyer_code).localeCompare(String(b.buyer_code)));
+        list.sort((a, b) => String(a.category).localeCompare(String(b.category)));
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         renderCollected();
       }
 
       function upsertResponse(entry) {
         const list = loadAll();
-        const key = String(entry.buyer_code).toUpperCase();
-        const idx = list.findIndex(r => String(r.buyer_code || "").toUpperCase() === key);
+        const key = String(entry.category).toUpperCase();
+        const idx = list.findIndex(r => String(r.category || "").toUpperCase() === key);
         if (idx >= 0) {
           list[idx] = entry;
         } else {
@@ -1139,14 +1133,14 @@
       }
 
       function validateForm() {
-        const code = $("buyerCode").value.trim();
-        if (!code) {
-          $("buyerCode").classList.add("invalid");
-          $("buyerCode").focus();
-          showToast("Please select Buyer Code (01-12) / 請先選擇買手編號");
+        const cat = $("categorySelect").value.trim();
+        if (!cat) {
+          $("categorySelect").classList.add("invalid");
+          $("categorySelect").focus();
+          showToast("Please select Category / 請先選擇品類負責人");
           return false;
         }
-        $("buyerCode").classList.remove("invalid");
+        $("categorySelect").classList.remove("invalid");
         return true;
       }
 
@@ -1202,7 +1196,7 @@
         $("respCount").textContent = list.length;
         const tbody = $("collectedBody");
         if (!list.length) {
-          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">No responses saved yet. Select a <strong>Buyer Code (01-12)</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />尚無暫存回覆，請先於上方選擇 <strong>Buyer Code (01-12)</strong> 並點擊提交匯出。</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">No responses saved yet. Select a <strong>Category</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />尚無暫存回覆，請先於上方選擇 <strong>Category</strong> 並點擊提交匯出。</td></tr>';
           return;
         }
         tbody.innerHTML = list.map((r, i) => {
@@ -1210,7 +1204,7 @@
           const stores = (r.excl_stores || "-") + " / " + (r.non_excl_stores || "-");
           return `
             <tr>
-              <td><span class="code-tag">${escapeHtml(r.buyer_code)}</span></td>
+              <td><span class="code-tag">${escapeHtml(r.category)}</span></td>
               <td>${escapeHtml(stores)}</td>
               <td>${escapeHtml(r.val_space_metres ? "+" + r.val_space_metres + "m" : "-")}</td>
               <td>${escapeHtml(r.val_growth_pt ? r.val_growth_pt + " pt" : "-")}</td>
@@ -1233,7 +1227,7 @@
             if (item) {
               fillForm(item);
               window.scrollTo({ top: 0, behavior: "smooth" });
-              showToast("Loaded Buyer Code " + item.buyer_code);
+              showToast("Loaded " + item.category);
             }
           });
         });
@@ -1244,7 +1238,7 @@
             const items = loadAll();
             const removed = items.splice(idx, 1);
             saveAll(items);
-            showToast("Removed Buyer Code " + (removed[0]?.buyer_code || ""));
+            showToast("Removed " + (removed[0]?.category || ""));
           });
         });
       }
@@ -1260,7 +1254,7 @@
         const entry = readForm();
         upsertResponse(entry);
         await sendToWebhook(entry);
-        showToast("Saved Buyer Code " + entry.buyer_code + " / 已暫存");
+        showToast("Saved " + entry.category + " / 已暫存");
       });
 
       $("btnSaveAndExportCsv").addEventListener("click", async () => {
@@ -1268,8 +1262,9 @@
         const entry = readForm();
         upsertResponse(entry);
         await sendToWebhook(entry);
-        downloadFile(`watsons_survey_buyer_${entry.buyer_code}.csv`, toCsv([entry]), "text/csv;charset=utf-8;");
-        showToast("Exported CSV for Buyer Code " + entry.buyer_code);
+        const safeName = entry.category.replace(/[^a-zA-Z0-9_-]/g, "_");
+        downloadFile(`watsons_survey_${safeName}.csv`, toCsv([entry]), "text/csv;charset=utf-8;");
+        showToast("Exported CSV for " + entry.category);
       });
 
       $("btnCopyEmail").addEventListener("click", async () => {
@@ -1284,7 +1279,7 @@
         ].filter(Boolean).join("; ");
 
         const summary = [
-          `Buyer Code: ${d.buyer_code}`,
+          `Category: ${d.category}`,
           `1. Store distribution: Excl ${d.excl_stores || "-"} stores (New concept unit: ${d.excl_concept_unit || "-"}) vs Non-Excl ${d.non_excl_stores || "-"} stores | Value: ${d.val_stores_diff || "-"} stores / ${d.val_stores_pct || "-"}`,
           `2. Space allocation: ${d.excl_space} vs ${d.non_excl_space} | Value: +${d.val_space_metres || "-"} metres`,
           `3. Annual growth target: Excl ${d.excl_growth_pct || "-"}% vs Non-Excl ${d.non_excl_growth_pct || "-"}% | Value: ${d.val_growth_pt || "-"} pt`,
@@ -1376,7 +1371,7 @@
           const obj = {};
           headers.forEach((h, idx) => { obj[h.trim()] = vals[idx] ?? ""; });
           return obj;
-        }).filter(o => o.buyer_code);
+        }).filter(o => o.category);
       }
 
       async function handleFiles(files) {
@@ -1388,7 +1383,7 @@
               const parsed = JSON.parse(text);
               const arr = Array.isArray(parsed) ? parsed : [parsed];
               arr.forEach(item => {
-                if (item && item.buyer_code) {
+                if (item && item.category) {
                   upsertResponse(item);
                   imported++;
                 }
