@@ -334,6 +334,97 @@
       margin-top: 16px;
     }
 
+    .submit-hero-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-submit-main {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 10px;
+      min-width: 240px;
+      box-shadow: 0 4px 12px rgba(0, 139, 148, 0.22);
+    }
+
+    .btn-submit-main:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    details.organizer-details {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    details.organizer-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      user-select: none;
+      background: var(--surface);
+      transition: background 0.15s;
+    }
+
+    details.organizer-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.organizer-details > summary:hover {
+      background: var(--surface-alt);
+    }
+
+    .organizer-toggle-hint {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .organizer-arrow {
+      display: inline-block;
+      transition: transform 0.2s;
+      font-size: 11px;
+    }
+
+    details.organizer-details[open] .organizer-arrow {
+      transform: rotate(90deg);
+    }
+
+    .organizer-body {
+      padding: 4px 24px 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .organizer-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--border);
+      margin-bottom: 14px;
+    }
+
     .btn-group {
       display: flex;
       flex-wrap: wrap;
@@ -814,62 +905,69 @@
         </div>
       </div>
 
-      <!-- Submit & Export Actions -->
-      <div class="actions-bar">
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary" id="btnSaveAndExportCsv">Submit &amp; Export CSV / 提交並匯出 CSV</button>
-          <button type="button" class="btn" id="btnSaveOnly">Save to List / 暫存至清單</button>
-          <button type="button" class="btn" id="btnCopyEmail">Copy Summary / 複製摘要文字</button>
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-sm" id="btnOpenWebhookModal">Cloud Sync / 雲端同步設定</button>
-        </div>
+      <!-- Primary Respondent Submit Action -->
+      <div class="submit-hero-bar">
+        <button type="button" class="btn btn-submit-main" id="btnSubmitSave">Submit &amp; Save / 儲存提交</button>
       </div>
     </div>
 
-    <!-- Collected Responses & Consolidator -->
-    <div class="card">
-      <div class="section-title">
-        <span>3. Collected Responses &amp; Master Export / 已收集回覆與總表匯出 (<span id="respCount">0</span>)</span>
-        <div class="btn-group">
-          <button type="button" class="btn btn-success btn-sm" id="btnExportAllCsv">Export Master CSV / 匯出全部總表</button>
-          <button type="button" class="btn btn-sm" id="btnExportAllJson">Export JSON / 匯出 JSON</button>
-          <button type="button" class="btn btn-sm btn-danger-outline" id="btnClearAll">Clear All / 清空</button>
+    <!-- Collected Responses & Organizer Tools (Collapsed by Default) -->
+    <details class="card organizer-details" id="organizerSection">
+      <summary>
+        <span>3. Collected Responses &amp; Organizer Tools / 已收集回覆與管理功能 (<span id="respCount">0</span>)</span>
+        <span class="organizer-toggle-hint">
+          <span>Expand / 展開管理選單</span>
+          <span class="organizer-arrow">▶</span>
+        </span>
+      </summary>
+      <div class="organizer-body">
+        <div class="organizer-toolbar">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSaveAndExportCsv">Submit &amp; Export CSV / 提交並匯出 CSV</button>
+            <button type="button" class="btn btn-sm" id="btnSaveOnly">Save to List / 暫存至清單</button>
+            <button type="button" class="btn btn-sm" id="btnCopyEmail">Copy Summary / 複製摘要文字</button>
+            <button type="button" class="btn btn-sm" id="btnOpenWebhookModal">Cloud Sync / 雲端同步設定</button>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success btn-sm" id="btnExportAllCsv">Export Master CSV / 匯出全部總表</button>
+            <button type="button" class="btn btn-sm" id="btnExportAllJson">Export JSON / 匯出 JSON</button>
+            <button type="button" class="btn btn-sm btn-danger-outline" id="btnClearAll">Clear All / 清空</button>
+          </div>
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+          <strong>Organizer Merge Tool / 彙整工具：</strong> Drag &amp; drop multiple <code>.csv</code> or <code>.json</code> files here (or click to select) to merge by <strong>Category</strong>.<br />
+          將多位負責人回傳的 <code>.csv</code> 或 <code>.json</code> 檔案拖曳至此（或點擊選取），即可依 <strong>Category</strong> 自動去重合併並匯出總表。
+          <input type="file" id="fileInput" multiple accept=".csv,.json" style="display:none;" />
+        </div>
+
+        <div class="collected-table-wrap">
+          <table class="collected-table">
+            <thead>
+              <tr>
+                <th>Category<br /><small>品類負責人</small></th>
+                <th>Stores (Excl / Non)<br /><small>店數 (獨家/非獨家)</small></th>
+                <th>Space (+m)<br /><small>空間增量</small></th>
+                <th>Growth (+pt)<br /><small>成長差距</small></th>
+                <th>Listing Saving<br /><small>上架費節省</small></th>
+                <th>Mkt Saving<br /><small>行銷節省</small></th>
+                <th>Reviews (+/yr)<br /><small>會議增量</small></th>
+                <th>Updated<br /><small>更新時間</small></th>
+                <th>Actions<br /><small>操作</small></th>
+              </tr>
+            </thead>
+            <tbody id="collectedBody">
+              <tr>
+                <td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">
+                  No responses saved yet. Select a <strong>Category</strong> above and click <strong>Submit &amp; Save</strong>.<br />
+                  尚無暫存回覆，請先於上方選擇 <strong>Category</strong> 並點擊儲存提交。
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-
-      <div class="drop-zone" id="dropZone">
-        <strong>Organizer Merge Tool / 彙整工具：</strong> Drag &amp; drop multiple <code>.csv</code> or <code>.json</code> files here (or click to select) to merge by <strong>Category</strong>.<br />
-        將多位負責人回傳的 <code>.csv</code> 或 <code>.json</code> 檔案拖曳至此（或點擊選取），即可依 <strong>Category</strong> 自動去重合併並匯出總表。
-        <input type="file" id="fileInput" multiple accept=".csv,.json" style="display:none;" />
-      </div>
-
-      <div class="collected-table-wrap">
-        <table class="collected-table">
-          <thead>
-            <tr>
-              <th>Category<br /><small>品類負責人</small></th>
-              <th>Stores (Excl / Non)<br /><small>店數 (獨家/非獨家)</small></th>
-              <th>Space (+m)<br /><small>空間增量</small></th>
-              <th>Growth (+pt)<br /><small>成長差距</small></th>
-              <th>Listing Saving<br /><small>上架費節省</small></th>
-              <th>Mkt Saving<br /><small>行銷節省</small></th>
-              <th>Reviews (+/yr)<br /><small>會議增量</small></th>
-              <th>Updated<br /><small>更新時間</small></th>
-              <th>Actions<br /><small>操作</small></th>
-            </tr>
-          </thead>
-          <tbody id="collectedBody">
-            <tr>
-              <td colspan="9" style="text-align:center; color:var(--text-muted); padding:20px;">
-                No responses saved yet. Select a <strong>Category</strong> above and click <strong>Submit &amp; Export CSV</strong>.<br />
-                尚無暫存回覆，請先於上方選擇 <strong>Category</strong> 並點擊提交匯出。
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </details>
   </div>
 
   <!-- Cloud Sync Modal -->
@@ -1247,6 +1345,28 @@
       $("btnResetForm").addEventListener("click", () => {
         resetForm();
         showToast("Form cleared / 表單已清空");
+      });
+
+      $("btnSubmitSave").addEventListener("click", async () => {
+        if (!validateForm()) return;
+        const btn = $("btnSubmitSave");
+        const origText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "Submitting... / 提交中...";
+        try {
+          const entry = readForm();
+          upsertResponse(entry);
+          await sendToWebhook(entry);
+          showToast("Submitted & Saved for " + entry.category + " / 已儲存提交！");
+          btn.textContent = "Saved / 已儲存提交 ✓";
+          setTimeout(() => {
+            btn.textContent = origText;
+            btn.disabled = false;
+          }, 1600);
+        } catch {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
       });
 
       $("btnSaveOnly").addEventListener("click", async () => {
